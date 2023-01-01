@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:training_diary/view/all_layout.dart';
 import 'package:training_diary/view/myCarousel.dart';
 import 'package:wakelock/wakelock.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name){
           case '/accueil' :
-            return PageTransition(child: MyHomePage(title: appTitle), type: PageTransitionType.fade, duration: Duration(milliseconds: 1000));
+            return PageTransition(child: MyHomePage(title: appTitle), type: PageTransitionType.fade, duration: Duration(milliseconds: 500));
         }
       },
       routes: {
@@ -61,20 +62,20 @@ class MyHomePage extends StatelessWidget {
                 Expanded(
                   child: Column(
                     children: [
-                      SizedBox(height: 25,),
+                      SizedBox(height: 40,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(left: 10), 
                             child: Builder(builder: (context) {
-                              return IconButton(onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu, color: Color.fromARGB(255, 227, 174, 64),));
+                              return IconButton(onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu, color: Color.fromARGB(255, 227, 174, 64), size: 40,));
                             }),
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 10), 
                             child: Card( // with Card
-                                child: Image.asset('img/top_r_logo.png', height: 40,),
+                                child: Image.asset('img/top_r_logo.png', height: 50,),
                                 elevation: 18.0,
                                 shape: const CircleBorder(),
                                 clipBehavior: Clip.antiAlias,
@@ -135,13 +136,18 @@ class RandomCitation extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 40), 
-                child: Text(
-                  "QUOTE DIEI", 
-                  style: TextStyle(
-                    fontFamily: "Augustus", 
-                    fontWeight: FontWeight.bold, 
-                    color: Color.fromARGB(255, 227, 174, 64),
-                    fontSize: 30
+                child: Shimmer.fromColors(
+                  baseColor: Color.fromARGB(255, 227, 174, 64), 
+                  highlightColor: Color.fromARGB(255, 234, 199, 133),
+                  period: Duration(milliseconds: 2000),
+                  child: Text(
+                    "QUOTE DIEI", 
+                    style: TextStyle(
+                      fontFamily: "Augustus", 
+                      fontWeight: FontWeight.bold, 
+                      color: Color.fromARGB(255, 227, 174, 64),
+                      fontSize: 30
+                    ),
                   ),
                 ),
               )

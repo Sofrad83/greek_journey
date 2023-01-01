@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'all_layout.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -7,48 +8,92 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
+            child: Stack(
               children: [
-                Stack(
+                Container(
+                  height: double.infinity,
+                  child:  Image.asset("img/drawer-1.png", fit: BoxFit.cover,)
+                ),
+                Container(
+                  decoration: BoxDecoration(color: Color.fromARGB(255, 41, 47, 50).withOpacity(0.9)),
+                ),
+                ListView(
+                  padding: EdgeInsets.zero,
                   children: [
                     Container(
-                      height: 200,
-                      width: double.infinity,
-                      child:  Image.asset("img/drawer.png", fit: BoxFit.cover,)
+                      child: Column(
+                        children: [
+                          SizedBox(height: 50,),
+                          Container(
+                            width: 100,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(1000),
+                              child: Image.asset("img/icon-2.png", fit: BoxFit.cover,),
+                            ),
+                          ),
+                          SizedBox(height: 20,),
+                          Shimmer.fromColors(
+                            baseColor: Color.fromARGB(255, 227, 174, 64), 
+                            highlightColor: Color.fromARGB(255, 234, 199, 133),
+                            period: Duration(milliseconds: 2000),
+                            child: Text(
+                              "GREEK JOURNEY", 
+                              style: TextStyle(
+                                fontFamily: "Augustus", 
+                                fontWeight: FontWeight.bold, 
+                                color: Color.fromARGB(255, 227, 174, 64),
+                                fontSize: 20
+                              ),
+                            ),
+                          ),
+                        ]
+                      ),
                     ),
-                    Container(
-                      height: 200,
-                      width: double.infinity,
-                      color: Color.fromARGB(255, 220, 160, 58).withOpacity(0.6),
+                    SizedBox(height: 25,),
+                    ListTile(
+                      title: Text("Accueil", style: TextStyle(
+                        fontFamily: "Romanica", 
+                        color: Color.fromARGB(255, 227, 174, 64),
+                        fontSize: 20
+                      ),),
+                      onTap: () => Navigator.pushReplacementNamed(context, "/accueil"),
                     ),
-                    Container(
-                      height: 100,
-                      width: 65,
-                      child: const Center(child: Text("Menu")),
-                    )
-                    
-                  ]
-                ),
-                ListTile(
-                  title: const Text('Accueil'),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, '/accueil');
-                  },
-                ),
-                ListTile(
-                  title: const Text('Exercices'),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, '/exercice');
-                  },
-                ),
-                ListTile(
-                  title: const Text('Routines'),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, '/routine');
-                  },
-                ),
-              ],
+                    ListTile(
+                      title: Text("S'exercer", style: TextStyle(
+                        fontFamily: "Romanica", 
+                        color: Color.fromARGB(255, 227, 174, 64),
+                        fontSize: 18
+                      ),),
+                      onTap: () => Navigator.pushReplacementNamed(context, "/choisirSeance"),
+                    ),
+                    ListTile(
+                      title: Text("Exercices", style: TextStyle(
+                        fontFamily: "Romanica", 
+                        color: Color.fromARGB(255, 227, 174, 64),
+                        fontSize: 18
+                      ),),
+                      onTap: () => Navigator.pushReplacementNamed(context, "/exercice"),
+                    ),
+                    ListTile(
+                      title: Text("Routines", style: TextStyle(
+                        fontFamily: "Romanica", 
+                        color: Color.fromARGB(255, 227, 174, 64),
+                        fontSize: 18
+                      ),),
+                      onTap: () => Navigator.pushReplacementNamed(context, "/routine"),
+                    ),
+                    ListTile(
+                      title: Text("À venir ...", style: TextStyle(
+                        fontFamily: "Romanica", 
+                        color: Color.fromARGB(255, 227, 174, 64),
+                        fontSize: 18
+                      ),),
+                      onTap: () => print("ah !"),
+                    ),
+
+                  ],
+                )
+              ]
             ),
           );
   }

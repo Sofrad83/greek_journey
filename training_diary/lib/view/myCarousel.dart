@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'all_layout.dart';
 
 final List<Map> imgList = [
-  {'path' : 'img/carousel-start-seance.png', 'nom' : "Débuter une séance", 'route' : '/choisirSeance'},
+  {'path' : 'img/carousel-start-seance.png', 'nom' : "S'exercer", 'route' : '/choisirSeance'},
   {'path' : 'img/carousel-exercice.png', 'nom' : "Mes exercices", 'route' : '/exercice' },
   {'path' : 'img/carousel-routine.png', 'nom' : "Mes routines", 'route' : '/routine' },
 ];
@@ -53,12 +54,18 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                                   ),
                                   padding: EdgeInsets.symmetric(
                                       vertical: 10.0, horizontal: 20.0),
-                                  child: Text(
-                                    item['nom'],
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
+                                  child: Shimmer.fromColors(
+                                    baseColor: Color.fromARGB(255, 227, 174, 64), 
+                                    highlightColor: Color.fromARGB(255, 234, 199, 133),
+                                    period: Duration(milliseconds: 4000),
+                                    child: Text(
+                                      item['nom'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Romanica'
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -94,7 +101,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
+                            ? Color.fromARGB(255, 227, 174, 64)
                             : Colors.black)
                         .withOpacity(_current == entry.key ? 0.9 : 0.4)),
               ),
