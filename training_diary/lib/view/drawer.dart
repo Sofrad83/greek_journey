@@ -33,7 +33,7 @@ class MyDrawer extends StatelessWidget {
                 ListTile(
                   title: const Text('Accueil'),
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, '/');
+                    Navigator.pushReplacementNamed(context, '/accueil');
                   },
                 ),
                 ListTile(

@@ -190,7 +190,7 @@ class _SeanceScreenState extends State<SeanceScreen> {
                         _lastSeancerequest = false;
                         _indexExercice = 0;
                       });
-                      Navigator.pushReplacementNamed(context, '/');
+                      Navigator.pushReplacementNamed(context, '/accueil');
                     }),
                   const SizedBox(height: 20,),
                   const Center(child: Text("Récap dernière séance pour cette exercice :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:training_diary/view/all_layout.dart';
 import 'package:training_diary/view/myCarousel.dart';
 import 'package:wakelock/wakelock.dart';
@@ -10,7 +11,7 @@ void main() => runApp( const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const appTitle = 'Gorilla Journey';
+  static const appTitle = 'Greek Journey';
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: appTitle,
       darkTheme: ThemeData.dark(),
-      home: MyHomePage(title: appTitle),
+      home: MySplashScreen(),
+      onGenerateRoute: (settings) {
+        switch (settings.name){
+          case '/accueil' :
+            return PageTransition(child: MyHomePage(title: appTitle), type: PageTransitionType.fade, duration: Duration(milliseconds: 1000));
+        }
+      },
       routes: {
-        //'/' : (context) => const MyApp(),
         '/exercice' : (context) => ExerciceScreen(),
         '/routine' : (context) => RoutineScreen(),
         '/choisirSeance' : (context) => ChoisirRoutineScreen()
@@ -37,50 +43,142 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title), backgroundColor: Color.fromARGB(255, 220, 160, 58),),
+      //appBar: AppBar(title: Text(title), backgroundColor: Color.fromARGB(255, 220, 160, 58),),
       backgroundColor: Color.fromARGB(255, 30, 30, 30),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 250.0,
-            child: CarouselWithIndicatorDemo() ,
-          ),
-          SizedBox(height: 20,),
-          Text("La citation du jour :", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),),
-          CardRandomCitation()
-        ],
-      ),
+      body: 
+        Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: Image.asset("img/home_background.png", fit: BoxFit.cover,)
+            ),
+            Container(
+              decoration: BoxDecoration(color: Color.fromARGB(255, 41, 47, 50).withOpacity(0.8)),
+            ),
+            Column(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 25,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 10), 
+                            child: Builder(builder: (context) {
+                              return IconButton(onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu, color: Color.fromARGB(255, 227, 174, 64),));
+                            }),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10), 
+                            child: Card( // with Card
+                                child: Image.asset('img/top_r_logo.png', height: 40,),
+                                elevation: 18.0,
+                                shape: const CircleBorder(),
+                                clipBehavior: Clip.antiAlias,
+                              ),
+                            
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 50,),
+                      RandomCitation(),
+                      SizedBox(height: 35,),
+                      SizedBox(
+                        height: 250.0,
+                        child: CarouselWithIndicatorDemo() ,
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 1,
+                  indent: 50,
+                  endIndent: 50,
+                  color: Color.fromARGB(255, 227, 174, 64),
+                ),
+                SizedBox(height: 40,)
+              ],
+            ),
+          ],
+        ),
+      
       drawer: const MyDrawer(),
     );
   }
 }
 
-class CardRandomCitation extends StatelessWidget {
-  CardRandomCitation({super.key});
+class RandomCitation extends StatelessWidget {
+  RandomCitation({super.key});
 
   final List<Map> citations = [
-    {'citation' : "La force ne vient pas de la victoire. Ce sont vos efforts qui développent vos forces", 'auteur' : "Arnold Schwarzenegger"},
-    {'citation' : "L’échec n’est pas une option. Tout le monde doit réussir", 'auteur' : "Arnold Schwarzenegger"},
-    {'citation' : "Rêvez grand et aspirez à quelque chose que les autres ne pensent pas être possible", 'auteur' : "Frank Zane"},
-    {'citation' : "Cherchez le progrès, pas la perfection", 'auteur' : "Inconnu"},
-    {'citation' : "Si vous pensez que vous allez échouer, alors vous allez probablement échouer", 'auteur' : "Kobe Bryant"},
-    {'citation' : "Ce qui me fait constamment avancer, ce sont mes objectifs", 'auteur' : "Mohamed Ali"},
-    {'citation' : "Prends soin de ton corps, c’est le seul endroit où tu es obligé de vivre", 'auteur' : "Inconnu"},
-    {'citation' : "Seul l’homme qui sait ce que c’est d’être vaincu peut atteindre le plus profond de son âme et revenir avec le supplément de force qu’il faut pour gagner", 'auteur' : "Mohamed Ali"},
-    {'citation' : "La volonté ne suffit pas, il faut savoir agir", 'auteur' : "Bruce Lee"},
-    {'citation' : "Certains veulent que ça arrive. D’autres aimeraient que ça arrive. Et les autres font que ça arrive", 'auteur' : "Michaël Jordan"},
-    {'citation' : "Les excuses ne brûlent pas des calories. Les exercices si", 'auteur' : "Inconnu"},
-    {'citation' : "Se réveiller déterminé. Aller se coucher satisfait", 'auteur' : "Dwayne Johnson"},
-    {'citation' : "Pour être un bon bodybuilder, il faut être d’abord un bon observateur", 'auteur' : "Serge Nubret"},
-    {'citation' : "Crois-moi, quand tu aimes quelque chose, tu n’a pas besoin de motivation", 'auteur' : "Serge Nubret"},
-    {'citation' : "Sang, sueur et respect. Les deux premiers, vous les donnez. Le dernier vous le gagnez.", 'auteur' : "The Rock"},
-    {'citation' : "Be like water my friend !", 'auteur' : "Bruce Lee"},
+    {'citation' : "C'est une honte qu'un homme vieillisse sans voir la beauté et la force dont son corps est capable.", 'auteur' : "Socrate"},
+    {'citation' : "Connais-toi toi-même.", 'auteur' : "Socrate"},
+    {'citation' : "Les maux du corps sont les mots de l'âme, ainsi on ne doit pas chercher à guérir le corps sans chercher à guérir l'âme.", 'auteur' : "Platon"},
+    {'citation' : "Repose-toi d'avoir bien fait, et laisse les autres dire de toi ce qu'ils veulent.", 'auteur' : "Pythagore"},
+    {'citation' : "L'ignorant affirme, le savant doute, le sage réfléchit.", 'auteur' : "Aristote"},
+    {'citation' : "On ne peut mieux vivre qu'en cherchant à devenir meilleur, ni plus agréablement qu'en ayant la pleine conscience de son amélioration.", 'auteur' : "Socrate"},
   ];
 
   @override
   Widget build(BuildContext context) {
     citations.shuffle();
-    return Card(
+    return Container(
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 40), 
+                child: Text(
+                  "QUOTE DIEI", 
+                  style: TextStyle(
+                    fontFamily: "Augustus", 
+                    fontWeight: FontWeight.bold, 
+                    color: Color.fromARGB(255, 227, 174, 64),
+                    fontSize: 30
+                  ),
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: EdgeInsets.only(left: 40, right: 40),
+            child: Text(
+              citations.first['citation'], 
+              style: TextStyle(
+                fontFamily: "Romanica",
+                color: Color.fromARGB(255, 227, 174, 64),
+                fontSize: 20
+              )
+            ,),
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [Padding(
+              padding: EdgeInsets.only(left: 40, right: 40),
+              child: Text(
+                citations.first['auteur'],
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  fontFamily: "Augustus",
+                  color: Color.fromARGB(255, 227, 174, 64),
+                  fontSize: 22
+                )
+              ,),
+            )],
+          )
+        ]
+      ),
+    );
+    /*Card(
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)),),
         margin: const EdgeInsets.all(8),
         elevation: 8,
@@ -98,7 +196,7 @@ class CardRandomCitation extends StatelessWidget {
           ]
         ),)
         ,
-      );
+      );*/
   }
 }
 

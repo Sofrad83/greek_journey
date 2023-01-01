@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'all_layout.dart';
 
 final List<Map> imgList = [
-  {'path' : 'img/start-seance-carousel.png', 'nom' : "Débuter une séance", 'route' : '/choisirSeance'},
-  {'path' : 'img/exercice-carousel.png', 'nom' : "Mes exercices", 'route' : '/exercice' },
-  {'path' : 'img/routine-carousel.png', 'nom' : "Mes routines", 'route' : '/routine' },
+  {'path' : 'img/carousel-start-seance.png', 'nom' : "Débuter une séance", 'route' : '/choisirSeance'},
+  {'path' : 'img/carousel-exercice.png', 'nom' : "Mes exercices", 'route' : '/exercice' },
+  {'path' : 'img/carousel-routine.png', 'nom' : "Mes routines", 'route' : '/routine' },
 ];
 
 class CarouselWithIndicatorDemo extends StatefulWidget {
