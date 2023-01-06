@@ -25,12 +25,13 @@ class MyApp extends StatelessWidget {
         switch (settings.name){
           case '/accueil' :
             return PageTransition(child: MyHomePage(title: appTitle), type: PageTransitionType.fade, duration: Duration(milliseconds: 500));
+          case '/exercice' :
+            return PageTransition(child: ExerciceScreen(), type: PageTransitionType.fade, duration: Duration(milliseconds: 500));
+          case '/routine' :
+            return PageTransition(child: RoutineScreen(), type: PageTransitionType.fade, duration: Duration(milliseconds: 500));
+          case '/choisirSeance' :
+            return PageTransition(child: ChoisirRoutineScreen(), type: PageTransitionType.fade, duration: Duration(milliseconds: 500));
         }
-      },
-      routes: {
-        '/exercice' : (context) => ExerciceScreen(),
-        '/routine' : (context) => RoutineScreen(),
-        '/choisirSeance' : (context) => ChoisirRoutineScreen()
       },
     );
   }
@@ -74,13 +75,31 @@ class MyHomePage extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 10), 
-                            child: Card( // with Card
-                                child: Image.asset('img/top_r_logo.png', height: 50,),
-                                elevation: 18.0,
-                                shape: const CircleBorder(),
-                                clipBehavior: Clip.antiAlias,
+                            child: Card(
+                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(100)),),
+                              margin: const EdgeInsets.all(8),
+                              elevation: 8,
+                              color: Color.fromARGB(255, 227, 174, 64),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 30, 
+                                    height: 30,
+                                    child: Card(
+                                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(100)),),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 5, 
+                                            height: 5,
+                                          )
+                                        ],
+                                      )
+                                    ),
+                                  )
+                                ],
                               ),
-                            
+                            )
                           )
                         ],
                       ),

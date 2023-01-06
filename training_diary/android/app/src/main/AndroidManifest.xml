@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.training_diary">
    <application
-        android:label="Gorilla Journey"
+        android:label="Greek Journey"
         android:name="${applicationName}"
         android:icon="@mipmap/icon">
         <activity

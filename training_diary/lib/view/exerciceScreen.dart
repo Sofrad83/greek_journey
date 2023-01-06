@@ -22,30 +22,97 @@ class ExerciceScreenState extends State<ExerciceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Mes exercices"), backgroundColor: Color.fromARGB(255, 220, 160, 58),),
+      //appBar: AppBar(title: const Text("Mes exercices"), backgroundColor: Color.fromARGB(255, 220, 160, 58),),
       backgroundColor: Color.fromARGB(255, 30, 30, 30),
       drawer: const MyDrawer(),
-      body: FutureBuilder<List<Exercice>>(
-        future: TrainingDiaryDatabase.instance.getAllExercices(),
-        builder: (context, snapshot) {
-          if(snapshot.hasData){
-            exercices = snapshot.data;
-            if(exercices!.isNotEmpty){
-                return ListView.builder(
-                itemCount: exercices?.length,
-                itemBuilder: (context, index) {
-                  final exercice = exercices![index];
-                  return ExerciceItemWidget(exercice: exercice, notifyParent: refresh,);
-                }, 
-              );
-            }else{
-              return const Center(child: Text("Pas d'exercices :("),);
-            }
-          }else {
-            return const Center(child: Text("Pas d'exercices :("),);
-          }
-        }, 
-      ) ,
+      body: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: Image.asset("img/carousel-exercice.png", fit: BoxFit.cover,)
+            ),
+            Container(
+              decoration: BoxDecoration(color: Color.fromARGB(255, 41, 47, 50).withOpacity(0.8)),
+            ),
+            Column(
+              children: [
+                SizedBox(height: 40,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10), 
+                      child: Builder(builder: (context) {
+                        return IconButton(onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu, color: Color.fromARGB(255, 227, 174, 64), size: 40,));
+                      }),
+                    ),
+                    Text(
+                      "Mes exercices", 
+                        style: TextStyle(
+                        fontFamily: "Augustus", 
+                        fontWeight: FontWeight.bold, 
+                        color: Color.fromARGB(255, 227, 174, 64),
+                        fontSize: 20
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 10), 
+                      child: Card(
+                        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(100)),),
+                        margin: const EdgeInsets.all(8),
+                        elevation: 8,
+                        color: Color.fromARGB(255, 227, 174, 64),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 30, 
+                              height: 30,
+                              child: Card(
+                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(100)),),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 5, 
+                                      height: 5,
+                                    )
+                                  ],
+                                )
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    )
+                  ],
+                ),
+                Expanded(
+                  child: FutureBuilder<List<Exercice>>(
+                  future: TrainingDiaryDatabase.instance.getAllExercices(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        exercices = snapshot.data;
+                        if(exercices!.isNotEmpty){
+                            return ListView.builder(
+                            itemCount: exercices?.length,
+                            itemBuilder: (context, index) {
+                              final exercice = exercices![index];
+                              return ExerciceItemWidget(exercice: exercice, notifyParent: refresh,);
+                            }, 
+                          );
+                        }else{
+                          return const Center(child: Text("Pas d'exercices :("),);
+                        }
+                      }else {
+                        return const Center(child: Text("Pas d'exercices :("),);
+                      }
+                    }, 
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {return AddExerciceScreen();} ));
@@ -71,7 +138,7 @@ class ExerciceItemWidget extends StatelessWidget {
         child: Row(
           children: [
             const Image(
-              image: AssetImage("img/exercices.png"),
+              image: AssetImage("img/exercice.png"),
               width: 100,
             ),
             Expanded(
@@ -82,11 +149,11 @@ class ExerciceItemWidget extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(exercice.nom, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20 ),),
+                      child: Text(exercice.nom, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Romanica", color: Color.fromARGB(255, 220, 160, 58)),),
                     ),
                     Text(
                       exercice.description, 
-                      style: TextStyle(color: Colors.grey[500], fontSize: 16),
+                      style: TextStyle(color: Color.fromARGB(255, 144, 105, 36), fontSize: 16,fontFamily: "Romanica"),
                     )
                   ],
                 )

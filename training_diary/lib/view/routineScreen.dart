@@ -22,30 +22,97 @@ class RoutineScreenState extends State<RoutineScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Mes routines"), backgroundColor: Color.fromARGB(255, 220, 160, 58),),
+      //appBar: AppBar(title: const Text("Mes routines"), backgroundColor: Color.fromARGB(255, 220, 160, 58),),
       backgroundColor: Color.fromARGB(255, 30, 30, 30),
       drawer: const MyDrawer(),
-      body: FutureBuilder<List<Routine>>(
-        future: TrainingDiaryDatabase.instance.getAllRoutines(),
-        builder: (context, snapshot) {
-          if(snapshot.hasData){
-            routines = snapshot.data;
-            if(routines!.isNotEmpty){
-                return ListView.builder(
-                itemCount: routines?.length,
-                itemBuilder: (context, index) {
-                  final routine = routines![index];
-                  return RoutineItemWidget(routine: routine, notifyParent: refresh,);
-                }, 
-              );
-            }else{
-              return const Center(child: Text("Pas de routines :("),);
-            }
-          }else {
-            return const Center(child: Text("Pas de routines :("),);
-          }
-        }, 
-      ),
+      body: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: Image.asset("img/carousel-routine.png", fit: BoxFit.cover,)
+            ),
+            Container(
+              decoration: BoxDecoration(color: Color.fromARGB(255, 41, 47, 50).withOpacity(0.8)),
+            ),
+            Column(
+              children: [
+                SizedBox(height: 40,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10), 
+                      child: Builder(builder: (context) {
+                        return IconButton(onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu, color: Color.fromARGB(255, 227, 174, 64), size: 40,));
+                      }),
+                    ),
+                    Text(
+                      "Mes routines", 
+                        style: TextStyle(
+                        fontFamily: "Augustus", 
+                        fontWeight: FontWeight.bold, 
+                        color: Color.fromARGB(255, 227, 174, 64),
+                        fontSize: 20
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 10), 
+                      child: Card(
+                        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(100)),),
+                        margin: const EdgeInsets.all(8),
+                        elevation: 8,
+                        color: Color.fromARGB(255, 227, 174, 64),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 30, 
+                              height: 30,
+                              child: Card(
+                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(100)),),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 5, 
+                                      height: 5,
+                                    )
+                                  ],
+                                )
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    )
+                  ],
+                ),
+                Expanded(
+                  child: FutureBuilder<List<Routine>>(
+                    future: TrainingDiaryDatabase.instance.getAllRoutines(),
+                    builder: (context, snapshot) {
+                      if(snapshot.hasData){
+                        routines = snapshot.data;
+                        if(routines!.isNotEmpty){
+                            return ListView.builder(
+                            itemCount: routines?.length,
+                            itemBuilder: (context, index) {
+                              final routine = routines![index];
+                              return RoutineItemWidget(routine: routine, notifyParent: refresh,);
+                            }, 
+                          );
+                        }else{
+                          return const Center(child: Text("Pas de routines :("),);
+                        }
+                      }else {
+                        return const Center(child: Text("Pas de routines :("),);
+                      }
+                    }, 
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {return AddRoutineScreen();} ));
@@ -71,7 +138,7 @@ class RoutineItemWidget extends StatelessWidget {
         child: Row(
           children: [
             const Image(
-              image: AssetImage("img/routine.png"),
+              image: AssetImage("img/routines.png"),
               width: 100,
             ),
             Expanded(
@@ -82,11 +149,11 @@ class RoutineItemWidget extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(routine.nom, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20 ),),
+                      child: Text(routine.nom, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Romanica", color: Color.fromARGB(255, 220, 160, 58)),),
                     ),
                     Text(
                       routine.description, 
-                      style: TextStyle(color: Colors.grey[500], fontSize: 16),
+                      style: TextStyle(color: Color.fromARGB(255, 144, 105, 36), fontSize: 16, fontFamily: "Romanica"),
                     )
                   ],
                 )
