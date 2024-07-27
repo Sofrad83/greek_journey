@@ -198,15 +198,15 @@ class _SeanceScreenState extends State<SeanceScreen> {
                                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
                                               IconButton(onPressed: (){
-                                                _stopWatchTimer.onExecute.add(StopWatchExecute.start);
+                                                //_stopWatchTimer.onExecute.add(StopWatchExecute.start);
                                               }, icon: const Icon(Icons.play_arrow, color: Color.fromARGB(255, 220, 160, 58), size: 35.0,)),
                                               
                                               IconButton(onPressed: (){
-                                                _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
+                                               // _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
                                               }, icon: const Icon(Icons.pause, color: Color.fromARGB(255, 220, 160, 58), size: 35.0,)),
 
                                               IconButton(onPressed: (){
-                                                _stopWatchTimer.onExecute.add(StopWatchExecute.reset);
+                                               // _stopWatchTimer.onExecute.add(StopWatchExecute.reset);
                                               }, icon: const Icon(Icons.square, color: Color.fromARGB(255, 220, 160, 58), size: 30.0,))
                                             ],
                                           )
